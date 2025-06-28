@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Servicios disponibles</h1>
+
+  {% if servicios %}
+    <div class="row">
+      {% for servicio in servicios %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.titulo }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ servicio.titulo }}</h5>
+              <p class="card-text"><strong>Categoría:</strong> {{ servicio.get_categoria_display }}</p>
+              <a href="{% url 'service_detail' servicio.id %}" class="btn btn-primary">Leer más</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No hay páginas aún.</p>
+  {% endif %}
+
+{% endblock %}

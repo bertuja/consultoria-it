@@ -1,0 +1,8 @@
+{% if request.user == servicio.autor %}
+  <a href="{% url 'service_update' servicio.pk %}" class="btn btn-warning">Editar</a>
+{% endif %}
+
+{% if request.user == servicio.autor %}
+  <a href="{% url 'service_update' servicio.pk %}" class="btn btn-warning">Editar</a>
+  <a href="{% url 'service_delete' servicio.pk %}" class="btn btn-danger">Eliminar</a>
+{% endif %}

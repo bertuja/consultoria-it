@@ -1,0 +1,13 @@
+<!-- templates/services/service_form.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Nuevo servicio</h2>
+    <form method="post" action="{% url 'service_create' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Guardar</button>
+    </form>
+  </div>
+{% endblock %}
