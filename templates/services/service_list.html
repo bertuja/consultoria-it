@@ -1,11 +1,24 @@
 {% extends 'base.html' %}
+
 {% block content %}
   <h2>Servicios</h2>
-  <ul>
+
+  <div class="row">
     {% for servicio in servicios %}
-      <li><a href="{% url 'service_detail' servicio.pk %}">{{ servicio.titulo }}</a></li>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          {% if servicio.imagen %}
+            <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.titulo }}">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ servicio.titulo }}</h5>
+            <p class="card-text">{{ servicio.get_categoria_display }}</p>
+            <a href="{% url 'service_detail' servicio.pk %}" class="btn btn-primary">Ver más</a>
+          </div>
+        </div>
+      </div>
     {% empty %}
-      <li>No hay servicios aún.</li>
+      <p>No hay servicios aún.</p>
     {% endfor %}
-  </ul>
+  </div>
 {% endblock %}

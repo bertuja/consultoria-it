@@ -45,3 +45,25 @@ class ServiceDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         service = self.get_object()
         return self.request.user == service.autor
+def form_valid(self, form):
+    form.instance.autor = self.request.user
+    return super().form_valid(form)
+from django.db.models import Q
+from .forms import SearchForm
+from .models import Service
+
+def search_services(request):
+    form = SearchForm(request.GET or None)
+    results = []
+
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        results = Service.objects.filter(
+            Q(titulo__icontains=query) |
+            Q(descripcion__icontains=query)
+        )
+
+    return render(request, 'services/search_results.html', {
+        'form': form,
+        'results': results
+    })

@@ -9,8 +9,10 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('admin/', admin.site.urls),
     path('pages/', include('services.urls')),
-    path('accounts/', include('accounts.urls')),  # ✅ usamos include
+    path('accounts/', include('accounts.urls')), 
     path('about/', about_view, name='about'),
+    path('messages/', include('messenger.urls')),
+
 ]
 
 if settings.DEBUG:

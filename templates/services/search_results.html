@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Buscar servicios</h2>
+
+  <form method="get">
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Buscar</button>
+  </form>
+
+  <hr>
+  {% if results %}
+    <ul>
+      {% for servicio in results %}
+        <li>{{ servicio.titulo }} - <a href="{% url 'service_detail' servicio.pk %}">Ver</a></li>
+      {% endfor %}
+    </ul>
+  {% elif form.is_bound %}
+    <p>No se encontraron resultados.</p>
+  {% endif %}
+{% endblock %}

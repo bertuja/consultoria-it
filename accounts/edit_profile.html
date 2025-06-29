@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Editar perfil</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h4>Datos de usuario</h4>
+      {{ user_form.as_p }}
+
+      <h4>Datos del perfil</h4>
+      {{ profile_form.as_p }}
+
+      <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    </form>
+  </div>
+{% endblock %}

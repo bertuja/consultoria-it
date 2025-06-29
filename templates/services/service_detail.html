@@ -1,8 +1,23 @@
-{% if request.user == servicio.autor %}
-  <a href="{% url 'service_update' servicio.pk %}" class="btn btn-warning">Editar</a>
-{% endif %}
+{% extends 'base.html' %}
 
-{% if request.user == servicio.autor %}
-  <a href="{% url 'service_update' servicio.pk %}" class="btn btn-warning">Editar</a>
-  <a href="{% url 'service_delete' servicio.pk %}" class="btn btn-danger">Eliminar</a>
-{% endif %}
+{% block content %}
+  <div class="container">
+    <h2>{{ servicio.titulo }}</h2>
+    <p><strong>Categoría:</strong> {{ servicio.get_categoria_display }}</p>
+    <p><strong>Autor:</strong> {{ servicio.autor.username }}</p>
+    <p><strong>Publicado el:</strong> {{ servicio.fecha_creacion }}</p>
+
+    {% if servicio.imagen %}
+      <img src="{{ servicio.imagen.url }}" class="img-fluid mb-3" alt="Imagen del servicio">
+    {% endif %}
+
+    <div class="mb-3">
+      {{ servicio.contenido|safe }}
+    </div>
+
+    {% if user == servicio.autor %}
+      <a href="{% url 'service_update' servicio.pk %}" class="btn btn-warning">Editar</a>
+      <a href="{% url 'service_delete' servicio.pk %}" class="btn btn-danger">Eliminar</a>
+    {% endif %}
+  </div>
+{% endblock %}

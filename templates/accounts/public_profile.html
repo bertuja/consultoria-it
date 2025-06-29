@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Perfil de {{ profile.user.username }}</h2>
+
+  <p><strong>Nombre:</strong> {{ profile.user.first_name }}</p>
+  <p><strong>Apellido:</strong> {{ profile.user.last_name }}</p>
+  <p><strong>Email:</strong> {{ profile.user.email }}</p>
+  <p><strong>Biografía:</strong> {{ profile.bio }}</p>
+  <p><strong>Fecha de nacimiento:</strong> {{ profile.birth_date }}</p>
+
+  {% if profile.avatar %}
+    <img src="{{ profile.avatar.url }}" alt="Avatar" width="150">
+  {% endif %}
+
+  {% if profile.user != request.user %}
+    <p>
+      <a class="btn btn-success" href="{% url 'new_message' profile.user.pk %}">
+        📩 Enviar mensaje
+      </a>
+    </p>
+  {% endif %}
+
+  <h3>Servicios creados</h3>
+  <ul>
+    {% for servicio in servicios %}
+      <li>
+        {{ servicio.titulo }} -
+        <a href="{% url 'service_detail' servicio.pk %}">Ver</a>
+      </li>
+    {% empty %}
+      <li>No ha creado servicios aún.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
