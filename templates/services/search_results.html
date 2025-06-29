@@ -1,20 +1,30 @@
 {% extends 'base.html' %}
-{% block content %}
-  <h2>Buscar servicios</h2>
 
-  <form method="get">
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Buscar</button>
+{% block title %}Buscar servicios - Consultoría IT{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">Buscar servicios</h2>
+
+  <form method="get" class="mb-4">
+    <div class="input-group">
+      {{ form.query }}
+      <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
   </form>
 
   <hr>
+
   {% if results %}
-    <ul>
+    <ul class="list-group">
       {% for servicio in results %}
-        <li>{{ servicio.titulo }} - <a href="{% url 'service_detail' servicio.pk %}">Ver</a></li>
+        <li class="list-group-item">
+          <h5>{{ servicio.titulo }}</h5>
+          <p>{{ servicio.contenido|truncatewords:20 }}</p>
+          <a href="{% url 'service_detail' servicio.pk %}" class="btn btn-sm btn-outline-primary">Ver</a>
+        </li>
       {% endfor %}
     </ul>
   {% elif form.is_bound %}
-    <p>No se encontraron resultados.</p>
+    <p class="text-muted">No se encontraron resultados.</p>
   {% endif %}
 {% endblock %}

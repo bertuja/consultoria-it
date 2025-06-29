@@ -24,9 +24,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'service_list' %}">Servicios</a>
           </li>
-           <li class="nav-item">
-  <a class="nav-link" href="{% url 'search_services' %}">Buscar servicios</a>
-           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'search_services' %}">Buscar servicios</a>
+          </li>
           {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'service_create' %}">Nuevo servicio</a>
@@ -46,7 +46,13 @@
           </li>
         </ul>
 
-        <ul class="navbar-nav">
+        <!-- Buscador en la navbar -->
+        <form class="d-flex" method="get" action="{% url 'search_services' %}">
+          <input class="form-control me-2" type="search" name="query" placeholder="Buscar..." aria-label="Buscar">
+          <button class="btn btn-outline-light" type="submit">🔍</button>
+        </form>
+
+        <ul class="navbar-nav ms-3">
           {% if user.is_authenticated %}
             <li class="nav-item">
               <span class="navbar-text me-2">Hola, {{ user.username }}</span>

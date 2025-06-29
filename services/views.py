@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
 
 from .models import Service
-from .forms import ServiceForm
+from .forms import ServiceForm, SearchForm
+
 
 class ServiceListView(ListView):
     model = Service
@@ -12,10 +14,12 @@ class ServiceListView(ListView):
     context_object_name = 'servicios'
     ordering = ['-fecha_creacion']
 
+
 class ServiceDetailView(DetailView):
     model = Service
     template_name = 'services/service_detail.html'
     context_object_name = 'servicio'
+
 
 class ServiceCreateView(LoginRequiredMixin, CreateView):
     model = Service
@@ -27,15 +31,17 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
         form.instance.autor = self.request.user
         return super().form_valid(form)
 
+
 class ServiceUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Service
     fields = ['titulo', 'categoria', 'contenido', 'imagen']
-    template_name = 'services/service_form.html'  # reutilizamos el mismo formulario
+    template_name = 'services/service_form.html'
     success_url = reverse_lazy('service_list')
 
     def test_func(self):
         service = self.get_object()
         return self.request.user == service.autor
+
 
 class ServiceDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Service
@@ -45,12 +51,7 @@ class ServiceDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         service = self.get_object()
         return self.request.user == service.autor
-def form_valid(self, form):
-    form.instance.autor = self.request.user
-    return super().form_valid(form)
-from django.db.models import Q
-from .forms import SearchForm
-from .models import Service
+
 
 def search_services(request):
     form = SearchForm(request.GET or None)
@@ -60,7 +61,7 @@ def search_services(request):
         query = form.cleaned_data['query']
         results = Service.objects.filter(
             Q(titulo__icontains=query) |
-            Q(descripcion__icontains=query)
+            Q(contenido__icontains=query)
         )
 
     return render(request, 'services/search_results.html', {
