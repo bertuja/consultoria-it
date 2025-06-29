@@ -1,4 +1,60 @@
+# Entorno virtual
 env/
-__pycache__/
+venv/
+ENV/
+*.env
+
+# Archivos de configuración sensibles
+*.secret
+*.key
+*.pem
+
+# Archivos de base de datos (SQLite)
+*.sqlite3
 db.sqlite3
+
+# Archivos subidos por usuarios
+/media/
 media/
+
+# Archivos estáticos recolectados (si usás collectstatic)
+staticfiles/
+static_root/
+
+# Archivos de caché y logs
+*.log
+*.pot
+*.py[cod]
+__pycache__/
+*.mo
+*.swp
+
+# Archivos de sistema y de IDEs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos temporales
+*.bak
+*.tmp
+*.orig
+
+# Archivos de compilación (si se usa algo como webpack o node)
+node_modules/
+dist/
+build/
+
+# coverage y pruebas
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+.coverage.*
+
+# Archivos de migraciones innecesarios (si deseás ignorarlos)
+# cuidado: si querés trackear migraciones, NO actives esta línea
+# */migrations/*.py
+# */migrations/*.pyc
